@@ -14,7 +14,6 @@ type configuration struct {
 	Username                  string
 	CalendarOAuthClientID     string
 	CalendarOAuthClientSecret string
-	Secret                    string
 }
 
 // IsValid validates if all the required fields are set.
@@ -29,10 +28,6 @@ func (c *configuration) IsValid() error {
 
 	if c.CalendarOAuthClientSecret == "" {
 		return fmt.Errorf("Must have Google Calendar oauth client secret")
-	}
-
-	if c.Secret == "" {
-		return fmt.Errorf("Must have secret key")
 	}
 
 	return nil
