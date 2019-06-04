@@ -22,7 +22,7 @@ import (
 const (
 	userTokenKey     = "_usertoken"
 	calendarTokenKey = "_calendartoken"
-	CalendarIconURL  = "plugins/google-calendar/Google_Calendar_Logo.png"
+	CalendarIconURL  = "plugins/mattermost-google-calendar/Google_Calendar_Logo.png"
 	BotUsername      = "Calendar Plugin"
 	postPretext      = "Event starting in 10 min"
 	welcomeMessage   = "Welcome to Google Calendar Plugin"
@@ -93,7 +93,7 @@ func (p *Plugin) getOAuthConfig() *oauth2.Config {
 	return &oauth2.Config{
 		ClientID:     pluginConfig.CalendarOAuthClientID,
 		ClientSecret: pluginConfig.CalendarOAuthClientSecret,
-		RedirectURL:  fmt.Sprintf("%s/plugins/google-calendar/oauth/complete", *config.ServiceSettings.SiteURL),
+		RedirectURL:  fmt.Sprintf("%s/plugins/mattermost-google-calendar/oauth/complete", *config.ServiceSettings.SiteURL),
 		Scopes:       []string{"https://www.googleapis.com/auth/calendar.readonly", "https://www.googleapis.com/auth/calendar.events.readonly"},
 		Endpoint:     google.Endpoint,
 	}
@@ -116,7 +116,7 @@ func (p *Plugin) ExecuteCommand(c *plugin.Context, args *model.CommandArgs) (*mo
 		if config.ServiceSettings.SiteURL == nil {
 			return getCommandResponse(model.COMMAND_RESPONSE_TYPE_EPHEMERAL, "Encountered an error connecting to Google Calendar."), nil
 		}
-		resp := getCommandResponse(model.COMMAND_RESPONSE_TYPE_EPHEMERAL, fmt.Sprintf("[Click here to link your Google Calendar.](%s/plugins/google-calendar/oauth/connect)", *config.ServiceSettings.SiteURL))
+		resp := getCommandResponse(model.COMMAND_RESPONSE_TYPE_EPHEMERAL, fmt.Sprintf("[Click here to link your Google Calendar.](%s/plugins/mattermost-google-calendar/oauth/connect)", *config.ServiceSettings.SiteURL))
 		return resp, nil
 	}
 
@@ -233,7 +233,7 @@ func (p *Plugin) setupCalendarWatchService(u *UserInfo) error {
 	uuid := uuid.New().String()
 
 	eventsWatchCall := calendarService.Events.Watch("primary", &calendar.Channel{
-		Address: fmt.Sprintf("%s/plugins/google-calendar/watch?userID=%s", *config.ServiceSettings.SiteURL, u.UserID),
+		Address: fmt.Sprintf("%s/plugins/mattermost-google-calendar/watch?userID=%s", *config.ServiceSettings.SiteURL, u.UserID),
 		Id:      uuid,
 		Type:    "web_hook",
 	})
