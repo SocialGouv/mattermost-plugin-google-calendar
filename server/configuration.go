@@ -31,10 +31,6 @@ func (c *configuration) IsValid() error {
 		return fmt.Errorf("Must have Google Calendar oauth client secret")
 	}
 
-	if c.Secret == "" {
-		return fmt.Errorf("Must have secret key")
-	}
-
 	return nil
 }
 
